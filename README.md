@@ -1,6 +1,6 @@
 # Sync Youtube
 
-*This is an early development Synced Youtube web app.*
+**This is an early development Synced Youtube web app.**
 
 *I used Socket.io as web socket for TCP connection between server and client*
 
