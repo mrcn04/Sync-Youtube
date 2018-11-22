@@ -2,10 +2,10 @@
 
 **This is an early development Synced Youtube web app.**
 
-*I used Socket.io as web socket for TCP connection between server and client*
+*I used Socket.io as web socket for TCP connection between server and client.*
 
 It basicly let you to watch youtube videos synced with the people who is on the
-website. There is play and pause buttons and progress bar which synced with everyone.
+website. There is a play and pause buttons and progress bar which synced with everyone.
 
 As addition, I added a little chatbox which takes your username when the page loads.
 
