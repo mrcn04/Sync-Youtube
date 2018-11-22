@@ -1,0 +1,103 @@
+body {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 16px !important;
+}
+
+.realhome-nav {
+    background: #252525;
+    height: 5rem;
+    text-align: left;
+    padding-top: 1.5rem;
+    padding-left: 3rem;
+}
+
+.realhome-nav-a {
+    background: #252525;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.realhome-nav-a:hover {
+    background: #252525;
+    text-decoration: none;
+}
+
+#player {
+    margin-top: 3rem;
+    position: relative;
+}
+
+iframe {
+    width: 70%;
+    height: 70%;
+    float: left;
+    margin-left: 1%;
+}
+
+.btn-default {
+    float: left;
+}
+
+.playercontrol {
+    float: left;
+    width: 40%;
+    height: 10%;
+    margin-left: 10%;
+    margin-top: 2%;
+    position: relative;
+}
+
+#progressBar {
+    display: flex;
+    position: relative;
+    left: 2rem;
+    top: 1.4rem;
+}
+
+#line {
+    background-color: black;
+    width: 100%;
+    height: 0.3rem;
+    position: relative;
+    z-index: 1;
+}
+
+#square {
+    position: absolute;
+    background-color: #ffffff;
+    border: 3px solid black;
+    width: 1.7rem;
+    height: 1.7rem;
+    bottom: -0.7rem;
+}
+
+.div {
+    float: left;
+    width: 100%;
+}
+
+#chatbox {
+    font-weight: 900;
+    color: #146A89;
+}
+
+#messages {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 80%;
+    word-break: break-all;
+    text-align: left;
+}
+
+.chat {
+    width: 100%;
+}
+
+.userNameSpan {
+    font-weight: 900;
+    padding-right: 15px;
+}
