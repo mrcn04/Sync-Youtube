@@ -91,7 +91,7 @@
                     var seekTo = (event.pageX - divOffset.left)/600*videoLength;
                     var mydata = {state: 'seekTo', time: seekTo}
                     socket.emit('event', mydata);
-                    player.seekTo(seekTo);
+                    player.seekTo(seekTo, true);
                 });
                 setInterval(function(){
                     if (player == null || progressBar == null){
@@ -177,12 +177,12 @@
         socket.on('event', function(msg) {
             if(msg.state == 'play'){
                 
-                player.playVideo();
+                playVideo();
             } else if (msg.state == 'pause') {
-                player.pauseVideo();
+                pauseVideo();
             } else if (msg.state == 'seekTo'){
                 if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                    player.seekTo();
+                    seekTo();
                 }
             }
         });
@@ -194,12 +194,14 @@
                 '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
             ];
     
+            socket.emit('new user', un);
+
             $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
             return false;
             });
-            socket.on('chat message', function(msg){ 
+            socket.on('chat message', function(msg){     
                 var li = $("<li></li>");
                 var span = $("<span></span>").css('color', getUsernameColor(un));
                 span.addClass("userNameSpan");
@@ -207,8 +209,7 @@
                 $('#messages').append($(li).text(msg));
                 $(li).prepend($(span).text(un));
            
-            });
-            socket.emit('new user', un);
+            });  
 
             function getUsernameColor (un) {
                 // Compute hash code
