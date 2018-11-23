@@ -71,14 +71,14 @@
                     mydata = {state: 'play', time: player.getCurrentTime()};
                     socket.emit('event', mydata);
                     console.log("vlasf");
-                    player.playVideo();
+                    playVideo();
                 });
                 
                 pauseVideoBtn.click(function(event){
                     mydata = {state: 'pause', time: player.getCurrentTime()};
                     socket.emit('event', mydata);
                     console.log(seekTo);
-                    player.pauseVideo();
+                    pauseVideo();
                 });
             }
 
@@ -89,7 +89,7 @@
                 progressBar.click(function(event){
                     var divOffset = $(this).offset();
                     var seekTo = (event.pageX - divOffset.left)/600*videoLength;
-                    var mydata = {state: 'play', time: seekTo}
+                    var mydata = {state: 'seekTo', time: seekTo}
                     socket.emit('event', mydata);
                     player.seekTo(seekTo);
                 });
@@ -160,8 +160,8 @@
           function pauseVideo() {
               player.pauseVideo();
           }
-          function seekTo(seconds){
-              player.seekTo(seconds);
+          function seekTo(){
+              player.seekTo();
           }
         </script>   
        
@@ -176,12 +176,14 @@
        
         socket.on('event', function(msg) {
             if(msg.state == 'play'){
-                if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                    seekTo(msg.time);
-                }
-                playVideo();
+                
+                player.playVideo();
             } else if (msg.state == 'pause') {
-                pauseVideo();
+                player.pauseVideo();
+            } else if (msg.state == 'seekTo'){
+                if (Math.abs(msg.time - player.getCurrentTime()) > 1){
+                    player.seekTo();
+                }
             }
         });
 
