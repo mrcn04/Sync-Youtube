@@ -177,12 +177,12 @@
         socket.on('event', function(msg) {
             if(msg.state == 'play'){
                 
-                playVideo();
+                playVideo(msg);
             } else if (msg.state == 'pause') {
-                pauseVideo();
+                pauseVideo(msg);
             } else if (msg.state == 'seekTo'){
                 if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                    seekTo();
+                    seekTo(msg);
                 }
             }
         });
