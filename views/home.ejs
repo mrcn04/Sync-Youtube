@@ -16,6 +16,7 @@
         #messages li { padding: 10px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
     </style>
+    <script src="/socket.io.js"></script>
 </head>
 <body>
 
@@ -169,7 +170,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
-    <script src="/socket.io.js"></script>
+    
     <script>
         var socket = io();
         var un = prompt("What's your username?");    
@@ -194,15 +195,19 @@
                 '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
             ]; 
            
-            // Tell the server your username
-            socket.emit('new user', un);
+            
 
             $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
             return false;
             });
-          
+
+            socket.on('new user', function(un){
+                // Tell the server your username
+            socket.emit('new user', un);
+            })
+            
             socket.on('chat message', function(msg){     
                 var li = $("<li></li>");
                 var span = $("<span></span>").css('color', getUsernameColor(un));
@@ -211,7 +216,8 @@
                 $('#messages').append($(li).text(msg));
                 $(li).prepend($(span).text(un));
            
-            });  
+            }); 
+            
 
             function getUsernameColor (un) {
                 // Compute hash code
