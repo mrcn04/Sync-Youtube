@@ -182,7 +182,7 @@
                 pauseVideo(msg);
             } else if (msg.state == 'seekTo'){
                 if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                    seekTo(msg);
+                seekTo(msg);
                 }
             }
         });
@@ -200,6 +200,8 @@
             $('#m').val('');
             return false;
             });
+
+            // Tell the server your username
             socket.emit('new user', un);
           
             socket.on('chat message', function(msg){     
