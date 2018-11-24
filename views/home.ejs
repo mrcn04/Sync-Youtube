@@ -177,12 +177,12 @@
         socket.on('event', function(msg) {
             if(msg.state == 'play'){
                 
-                playVideo(msg);
+                player.playVideo(msg);
             } else if (msg.state == 'pause') {
-                pauseVideo(msg);
+                player.pauseVideo(msg);
             } else if (msg.state == 'seekTo'){
                 if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                seekTo(msg);
+                player.seekTo(msg);
                 }
             }
         });
@@ -194,15 +194,14 @@
                 '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
             ]; 
            
+            // Tell the server your username
+            socket.emit('new user', un);
 
             $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
             return false;
             });
-
-            // Tell the server your username
-            socket.emit('new user', un);
           
             socket.on('chat message', function(msg){     
                 var li = $("<li></li>");

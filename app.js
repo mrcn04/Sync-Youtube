@@ -35,20 +35,20 @@ io.on('connection', function(socket){
         console.log(msg);
     }); 
 
-    socket.on('chat message', function(msg, newUser){
+    socket.on('chat message', function(msg){
         console.log('message: ' + msg);
         io.emit('chat message', msg);
-        io.emit('new user', newUser);
     });
 
     // username
     socket.on('new user', function(un){
-        var newUser = un;
-        console.log(newUser + ' connected');
-        io.emit('connection2', "Welcome to Ömür's Chatbox " + newUser);  
+        var un = un;
+        socket.un = un;
+        console.log(un + ' connected');
+        io.emit('connection2', "Welcome to Ömür's Chatbox " + un);  
         socket.on('disconnect', function(){
             console.log('user disconnected');
-            io.emit('disconnection', newUser + ' disconnected.');
+            io.emit('disconnection', un + ' disconnected.');
           });
     });
 
