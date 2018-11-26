@@ -161,8 +161,8 @@
           function pauseVideo() {
               player.pauseVideo();
           }
-          function seekTo(){
-              player.seekTo();
+          function seekTo(seconds){
+              player.seekTo(seconds);
           }
         </script>   
        
@@ -173,17 +173,17 @@
     
     <script>
         var socket = io();
-        var un = prompt("What's your username?");    
+        var username = prompt("What's your username?"); 
        
         socket.on('event', function(msg) {
             if(msg.state == 'play'){
                 
-                player.playVideo(msg);
+                player.playVideo();
             } else if (msg.state == 'pause') {
-                player.pauseVideo(msg);
+                player.pauseVideo();
             } else if (msg.state == 'seekTo'){
                 if (Math.abs(msg.time - player.getCurrentTime()) > 1){
-                player.seekTo(msg);
+                    player.seekTo(msg.time);
                 }
             }
         });
@@ -193,37 +193,34 @@
                 '#e21400', '#91580f', '#f8a700', '#f78b00',
                 '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
                 '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
-            ]; 
-           
+            ];   
             
+
+            // Tell the server your username
+            socket.emit('new user', username);
 
             $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
             return false;
+            username = username;
             });
 
-            socket.on('new user', function(un){
-                // Tell the server your username
-            socket.emit('new user', un);
-            })
-            
             socket.on('chat message', function(msg){     
                 var li = $("<li></li>");
-                var span = $("<span></span>").css('color', getUsernameColor(un));
+                var span = $("<span></span>").css('color', getUsernameColor(username));
                 span.addClass("userNameSpan");
                 
                 $('#messages').append($(li).text(msg));
-                $(li).prepend($(span).text(un));
+                $(li).prepend($(span).text(username));
            
             }); 
-            
 
-            function getUsernameColor (un) {
+            function getUsernameColor (username) {
                 // Compute hash code
                 var hash = 7;
-                for (var i = 0; i < un.length; i++) {
-                    hash = un.charCodeAt(i) + (hash << 5) - hash;
+                for (var i = 0; i < username.length; i++) {
+                    hash = username.charCodeAt(i) + (hash << 5) - hash;
                 }
                 // Calculate color
                 var index = Math.abs(hash % COLORS.length);

@@ -30,27 +30,29 @@ http.listen(port, function(){
   });
 
 // Socket setup
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
+
+    // Buttons and Progress bar
     socket.on('event', function(msg){
+        io.emit('event', msg);
         console.log(msg);
     }); 
 
-    socket.on('chat message', function(msg, un){
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
-        io.emit('new user', un);
+    // username
+    socket.on('new user', function(username){
+        socket.username = username;
+        io.emit('new user', username);
+        console.log(username + ' connected');
+        io.emit('connection2', "Welcome to Ömür's Chatbox " + username);  
+        socket.on('disconnect', function(){
+            console.log(username + ' disconnected');
+          });
     });
 
-    // username
-    socket.on('new user', function(un){
-        var un = un;
-        socket.un = un;
-        console.log(un + ' connected');
-        io.emit('connection2', "Welcome to Ömür's Chatbox " + un);  
-        socket.on('disconnect', function(){
-            console.log('user disconnected');
-            io.emit('disconnection', un + ' disconnected.');
-          });
+    // chatbox
+    socket.on('chat message', function(msg){
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
     });
 
     // User connections
