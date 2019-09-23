@@ -200,18 +200,22 @@
             socket.emit('new user', username);
 
             $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
+            let message = {
+                username: username,
+                payload: $('#m').val()
+            }
+            socket.emit('chat message', message);
             $('#m').val('');
             return false;
-            username = username;
             });
 
-            socket.on('chat message', function(msg){     
+            socket.on('chat message', function(message){
+                let {payload, username} = message;    
                 var li = $("<li></li>");
                 var span = $("<span></span>").css('color', getUsernameColor(username));
                 span.addClass("userNameSpan");
                 
-                $('#messages').append($(li).text(msg));
+                $('#messages').append($(li).text(payload));
                 $(li).prepend($(span).text(username));
            
             }); 

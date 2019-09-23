@@ -55,10 +55,9 @@ io.on('connection', function(socket) {
         io.emit('chat message', msg);
     });
 
-    // User connections
-    console.log('User ' + socket.id + ' Connected');
-    socket.on('disconnect', function(){
-        console.log('User ' + socket.id + ' Disconnected');
-    });
-    
+    // // User connections
+    // console.log('User ' + socket.username + ' Connected');
+    // socket.on('disconnect', function(){
+    //     console.log('User ' + socket.username + ' Disconnected');
+    // });
 });
